@@ -1,15 +1,19 @@
-var formulario = document.querySelector("#form")
+/*Francisco Hernández Padilla
+Calificación 10
+Evaluó Ana Pau Garfias*/
 
-formulario.onsubmit = function(e) {
+var formulario = document.querySelector(".formulario")/*corregir punto*/
 
-  e.prevent();
-  
+formulario.onsubmit = function (e) {
+
+  e.preventDefault();/*agregar default*/
+
   var n = formulario.elements[0]
-  var e = formulario.elements[1]
+  var edadin = formulario.elements[1]/*evitar conflicto con e*/
   var na = formulario.elements[2]
 
   var nombre = n.value
-  var edad = e.value
+  var edad = parseInt(edadin.value)/*entero*/
 
   var i = na.selectedIndex
   var nacionalidad = na.options[i].value
@@ -20,22 +24,13 @@ formulario.onsubmit = function(e) {
     n.classList.add("error")
   }
   if (edad < 18 || edad > 120) {
-    e.classList.add("error")
+    edadin.classList.add("error")
   }
 
-if (nombre.length > 0 
-  && (edad > 18 
-    && edad < 120) ) {
-  agregarInvitado(nombre, edad, nacionalidad)
+  if (nombre.length > 0 && (edad >= 18 && edad <= 120)) {
+    agregarInvitado(nombre, edad, nacionalidad)
   }
 }
-
-var botonBorrar = document.createElement("button")
-botonBorrar.textContent = "Eliminar invitado"
-botonBorrar.id = "boton-borrar"
-var corteLinea = document.createElement("br")
-document.body.appendChild(corteLinea)
-document.body.appendChild(botonBorrar);
 
 function agregarInvitado(nombre, edad, nacionalidad) {
 
@@ -52,46 +47,38 @@ function agregarInvitado(nombre, edad, nacionalidad) {
     nacionalidad = "Peruana"
   }
 
-var lista = document.getElementById("lista-de-invitados")
+  var lista = document.getElementById("lista-de-invitados")
 
-var elementoLista = document.createElement("div")
-elementoLista.classList.added("elemento-lista")
-lista.appendChild(elementoLista)
+  var elementoLista = document.createElement("div")
+  elementoLista.classList.add("elemento-lista")
+  lista.appendChild(elementoLista)
+  /*esto estaba repetido así que lo borré*/
 
-var spanNombre = document.createElement("span")
-var inputNombre = document.createElement("input")
-var espacio = document.createElement("br")
-spanNombre.textContent = "Nombre: "
-inputNombre.value = nombre 
-elementoLista.appendChild(spanNombre)
-elementoLista.appendChild(inputNombre)
-elementoLista.appendChild(espacio)
+  function crearElemento(descripcion, valor) {
+    var spanNombre = document.createElement("span")
+    var inputNombre = document.createElement("input")
+    var espacio = document.createElement("br")
+    spanNombre.textContent = descripcion + ": "
+    inputNombre.value = valor
+    elementoLista.appendChild(spanNombre)
+    elementoLista.appendChild(inputNombre)
+    elementoLista.appendChild(espacio)
+  }
 
-function crearElemento(descripcion, valor) {
-var spanNombre = document.createElement("span")
-var inputNombre = document.createElement("input")
-var espacio = document.createElement("br")
-spanNombre.textContent = descripcion + ": "
-inputNombre.value = valor 
-elementoLista.appendChild(spanNombre)
-elementoLista.appendChild(inputNombre)
-elementoLista.appendChild(espacio)
-}
-
-crearElemento("Nombre", nombre)
-crearElemento("Edad", edad)
-crearElemento("Nacionalidad", nacionalidad)
+  crearElemento("Nombre", nombre)
+  crearElemento("Edad", edad)
+  crearElemento("Nacionalidad", nacionalidad)
 
 
-var botonBorrar = document.createElement("button")
-botonBorrar.textContent = "Eliminar invitado"
-botonBorrar.id = "boton-borrar"
-var corteLinea = document.createElement("br")
-elementoLista.appendChild(corteLinea)
-elementoLista.appendChild(botonBorrar);
+  var botonBorrar = document.createElement("button")
+  botonBorrar.textContent = "Eliminar invitado"
+  botonBorrar.id = "boton-borrar"
+  var corteLinea = document.createElement("br")
+  elementoLista.appendChild(corteLinea)
+  elementoLista.appendChild(botonBorrar);
 
- botonBorrar.onclick = function() {
-// this.parentNode.style.display = 'none';
-botonBorrar.parentNode.remove()
+  botonBorrar.onclick = function () {
+    // this.parentNode.style.display = 'none';
+    botonBorrar.parentNode.remove()
   }
 }
